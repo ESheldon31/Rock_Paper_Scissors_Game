@@ -2,12 +2,13 @@ import cv2
 from keras.models import load_model
 import numpy as np
 import random
+import time
 model = load_model('keras_model.h5')
 cap = cv2.VideoCapture(0)
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
 class Rock_paper_scissors:
-    def __init__(self, prediction, round_marker= 0):
+    def __init__(self, prediction, round_marker= 1):
         self.prediction = prediction
         self.round_marker = round_marker
         self.options = ['rock', 'paper', 'scissors', 'nothing']
@@ -19,7 +20,6 @@ class Rock_paper_scissors:
         pass
 
     def compare_input(self):
-        # While loop?
         if self.player_choice == self.computer_choice:
             self.player_points += 1
             self.computer_points += 1
@@ -35,28 +35,33 @@ class Rock_paper_scissors:
             self.computer_points += 1
             self.round_marker += 1
             print('You lost this round!')
+        if self.round_marker <4:
+            print(f'Get ready for round {self.round_marker}')
         pass
 
     def get_input(self, prediction):
         while True:
-            self.computer_choice = random.choice(self.options[:2])
-            index = np.argmax(prediction[0])
-            self.player_choice = self.options[index]
-        # What about if player shows nothing?
-            print(f'You chose {self.player_choice}.')
-            print('The computer chose...')
-        # Add delay?
-            print(self.computer_choice)
+            start_key = input('Type "go", then press enter to start.')
+            if start_key == "go":
+                self.computer_choice = random.choice(self.options[:2])
+                index = np.argmax(prediction[0])
+                # What about if player shows nothing?
+                self.player_choice = self.options[index]
+                print(f'You chose {self.player_choice}.')
+                print('The computer chose...')
+                time.sleep(1)
+                print(self.computer_choice)
+            else: print('Type "go", then press enter to start.')
             break 
-        
+
         self.compare_input()
         pass
 
 def play_game():
-    game = Rock_paper_scissors(prediction, round_marker=0)
+    game = Rock_paper_scissors(prediction, round_marker=1)
     while True:
         game.get_input(prediction)
-        if game.round_marker == 3:
+        if game.round_marker == 4:
             if game.player_points == game.computer_points:
                 print('It\'s a draw! Good game.')
                 break
@@ -65,7 +70,7 @@ def play_game():
                 break
             else: print('You lost. Better luck next time!')
             break
-        pass
+        else: pass
 
 while True: 
     ret, frame = cap.read()
@@ -76,9 +81,10 @@ while True:
     prediction = model.predict(data)
     cv2.imshow('frame', frame)
     # Press q to close the window
-    play_game()
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+    play_game()
+    break
 
 
 # After the loop release the cap object
