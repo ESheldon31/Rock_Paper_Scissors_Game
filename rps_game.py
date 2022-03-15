@@ -8,26 +8,24 @@ cap = cv2.VideoCapture(0)
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
 class Rock_paper_scissors:
-    def __init__(self, prediction, round_marker= 1):
-        self.prediction = prediction
-        self.round_marker = round_marker
+    def __init__(self): 
+        self.round_marker = 1
         self.options = ['rock', 'paper', 'scissors', 'nothing']
-        self.computer_choice = None
-        self.player_choice = None
         self.player_points = 0
         self.computer_points = 0
         print('Get ready!')
         pass
 
-    def compare_input(self):
-        if self.player_choice == self.computer_choice:
+    def compare_input(self, player_choice, computer_choice):
+        time.sleep(2)
+        if player_choice == computer_choice:
             self.player_points += 1
             self.computer_points += 1
             self.round_marker += 1
             print('It\'s a draw!')
-        elif (self.player_choice == 'scissors' and self.computer_choice == 'paper') \
-            or (self.player_choice == 'paper' and self.computer_choice == 'rock') \
-            or (self.player_choice == 'rock' and self.computer_choice == 'paper'):
+        elif (player_choice == 'scissors' and computer_choice == 'paper') \
+            or (player_choice == 'paper' and computer_choice == 'rock') \
+            or (player_choice == 'rock' and computer_choice == 'paper'):
             self.player_points += 1
             self.round_marker += 1
             print('You won this round!')
@@ -36,58 +34,59 @@ class Rock_paper_scissors:
             self.round_marker += 1
             print('You lost this round!')
         if self.round_marker <4:
-            print(f'Get ready for round {self.round_marker}')
-        pass
+            time.sleep(1)
+            print(f'Get ready for round {self.round_marker}.')
 
-    def get_input(self, prediction):
+    def get_prediction(self):
+        ret, frame = cap.read()
+        resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
+        image_np = np.array(resized_frame)
+        normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
+        data[0] = normalized_image
+        prediction = model.predict(data)
+        cv2.imshow('frame', frame)
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+            #return None
+        index = np.argmax(prediction[0])
+        return index
+
+    def get_input(self):
         while True:
             start_key = input('Type "go", then press enter to start.')
             if start_key == "go":
-                self.computer_choice = random.choice(self.options[:2])
-                index = np.argmax(prediction[0])
-                # What about if player shows nothing?
-                while index != 3:
-                    self.player_choice = self.options[index]
-                    print(f'You chose {self.player_choice}.')
-                    print('The computer chose...')
-                    time.sleep(2)
-                    print(self.computer_choice)
-                    break
-            else: print('Type "go", then press enter to start.')
-             
-
-            self.compare_input()
-            pass
-
+                computer_choice = random.choice(self.options[:3])
+                while True: 
+                    time.sleep(1)
+                    index = self.get_prediction()
+                    if index == 3:
+                        print('The camera can\'t see you. Try again')
+                    else:
+                        player_choice = self.options[index]
+                        print(f'You chose {player_choice}.')
+                        print('The computer chose...')
+                        time.sleep(2)
+                        print(computer_choice)
+                        self.compare_input(player_choice, computer_choice)
+                        break 
+            break
+            
 def play_game():
-    game = Rock_paper_scissors(prediction, round_marker=1)
+    game = Rock_paper_scissors()
     while True:
-        game.get_input(prediction)
+        game.get_input()
         if game.round_marker == 4:
+            time.sleep(2)
             if game.player_points == game.computer_points:
                 print('It\'s a draw! Good game.')
                 break
             elif game.player_points > game.computer_points:
-                print('You won! Well done!')
+                print('You won the game! Well done!')
                 break
             else: print('You lost. Better luck next time!')
             break
-        else: pass
 
-while True: 
-    ret, frame = cap.read()
-    resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
-    image_np = np.array(resized_frame)
-    normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
-    data[0] = normalized_image
-    prediction = model.predict(data)
-    cv2.imshow('frame', frame)
-    # Press q to close the window
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+if __name__ == '__main__':
     play_game()
-    break
-
 
 # After the loop release the cap object
 cap.release()
