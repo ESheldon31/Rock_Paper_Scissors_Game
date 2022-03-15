@@ -30,11 +30,38 @@ class Rock_paper_scissors:
         self.computer_points = 0
         print('Get ready!')
 
+    def compare_input(self):
+        self.round_marker += 1
+        # While loop?
+        if self.player_choice == self.computer_choice:
+            self.player_points += 1
+            self.computer_points += 1
+            print('It\'s a draw!')
+        elif (self.player_choice == 'scissors' and self.computer_choice == 'paper') \
+            or (self.player_choice == 'paper' and self.computer_choice == 'rock') \
+            or (self.player_choice == 'rock' and self.computer_choice == 'paper'):
+            self.player_points += 1
+            print('You won this round!')
+        else: 
+            self.computer_points += 1
+            print('You lost this round!')
+
     def get_input(self, prediction):
         self.computer_choice = random.choice(self.options[:2])
-        max = np.argmax(prediction[0])
-        
+        index = np.argmax(prediction[0])
+        self.player_choice = self.options[index]
+        # What about if player shows nothing?
+        print(f'You chose {self.player_choice}.')
+        print('The computer chose...')
+        # Add delay?
+        print(self.computer_choice)
 
+        self.compare_input()
+
+def play_game():
+    game = Rock_paper_scissors(prediction, round_marker=0)
+    while True:
+        game.get_input(prediction)
 
 
 
