@@ -12,8 +12,8 @@ class Rock_paper_scissors:
         self.prediction = prediction
         self.round_marker = round_marker
         self.options = ['rock', 'paper', 'scissors', 'nothing']
-        self.computer_choice = ''
-        self.player_choice = ''
+        self.computer_choice = None
+        self.player_choice = None
         self.player_points = 0
         self.computer_points = 0
         print('Get ready!')
@@ -46,16 +46,18 @@ class Rock_paper_scissors:
                 self.computer_choice = random.choice(self.options[:2])
                 index = np.argmax(prediction[0])
                 # What about if player shows nothing?
-                self.player_choice = self.options[index]
-                print(f'You chose {self.player_choice}.')
-                print('The computer chose...')
-                time.sleep(1)
-                print(self.computer_choice)
+                while index != 3:
+                    self.player_choice = self.options[index]
+                    print(f'You chose {self.player_choice}.')
+                    print('The computer chose...')
+                    time.sleep(2)
+                    print(self.computer_choice)
+                    break
             else: print('Type "go", then press enter to start.')
-            break 
+             
 
-        self.compare_input()
-        pass
+            self.compare_input()
+            pass
 
 def play_game():
     game = Rock_paper_scissors(prediction, round_marker=1)
