@@ -23,12 +23,20 @@ class Rock_paper_scissors:
     def __init__(self, prediction, round_marker= 0):
         self.prediction = prediction
         self.round_marker = round_marker
+        self.options = ['rock', 'paper', 'scissors', 'nothing']
+        self.computer_choice = ''
+        self.player_choice = ''
         self.player_points = 0
         self.computer_points = 0
         print('Get ready!')
 
     def get_input(self, prediction):
+        self.computer_choice = random.choice(self.options[:2])
+        max = np.argmax(prediction[0])
         
+
+
+
 
 # After the loop release the cap object
 cap.release()
