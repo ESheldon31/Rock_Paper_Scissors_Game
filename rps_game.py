@@ -52,8 +52,8 @@ class Rock_paper_scissors:
 
     def get_input(self):
         while True:
-            start_key = input('Type "go", then press enter to start.')
-            if start_key == "go":
+            start_key = input('Press enter to start.')
+            if start_key == '':
                 computer_choice = random.choice(self.options[:3])
                 while True: 
                     time.sleep(1)
