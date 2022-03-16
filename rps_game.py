@@ -28,11 +28,11 @@ class Rock_paper_scissors:
             or (player_choice == 'rock' and computer_choice == 'paper'):
             self.player_points += 1
             self.round_marker += 1
-            print('You won this round!')
+            print('You\'ve won this round!')
         else: 
             self.computer_points += 1
             self.round_marker += 1
-            print('You lost this round!')
+            print('You\'ve lost this round!')
         if self.round_marker <4:
             time.sleep(1)
             print(f'Get ready for round {self.round_marker}.')
