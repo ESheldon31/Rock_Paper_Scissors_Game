@@ -69,7 +69,13 @@ class Rock_paper_scissors:
                         self.compare_input(player_choice, computer_choice)
                         break 
             break
-            
+
+    def close_window(self):
+        # After the loop release the cap object
+        self.cap.release()
+        # Destroy all the windows
+        self.cv2.destroyAllWindows()
+
 def play_game():
     game = Rock_paper_scissors()
     while True:
@@ -83,12 +89,9 @@ def play_game():
                 print('You won the game! Well done!')
                 break
             else: print('You lost. Better luck next time!')
+            game.close_window()
             break
-
+        
+            
 if __name__ == '__main__':
     play_game()
-
-# After the loop release the cap object
-cap.release()
-# Destroy all the windows
-cv2.destroyAllWindows()
