@@ -16,6 +16,7 @@ class RockPaperScissors:
         self.started = False
         self.countdown_switch = False
         self.end = False
+        self.camera_error = False
         self.timestamp = time.time()
         self.time_elapsed = 0
         self.message_left = ''
@@ -52,11 +53,17 @@ class RockPaperScissors:
                 self.intro()
             elif self.round_marker == 4:
                 self.end_game()
+            elif self.camera_error == True:
+                self.message_left_low = 'The camera can\'t detect you. Press s to try again.'
+                if cv2.waitKey(33) & 0xFF == ord('s'):
+                    self.started = True
+                    self.countdown_switch = True 
             elif self.round_marker > 1:
                 self.message_left_low = f'Press \'s\' to move onto round {self.round_marker}.'
                 if cv2.waitKey(33) & 0xFF == ord('s'):
                     self.started = True
                     self.countdown_switch = True
+            
 
     def get_player_choices(self):
         if self.started == True:
@@ -71,7 +78,7 @@ class RockPaperScissors:
                 self.computer_choice = random.choice(self.options[:3])
                 index = self.get_prediction()
                 if index == 3:
-                    self.message_left_low = 'The camera can\'t detect you. Press s to try again.'
+                    self.camera_error = True                
                 else:
                     self.player_choice = self.options[index]
                     self.message_left = f'You chose {self.player_choice}.'
