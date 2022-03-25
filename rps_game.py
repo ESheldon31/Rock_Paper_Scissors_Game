@@ -68,6 +68,7 @@ class RockPaperScissors:
             self.time_elapsed = (10 * self.round_marker) - (time.time() - self.timestamp)
 
             if self.countdown_switch:
+                self.message_left_low = ''
                 self.message_left_mid = f'Show your hand in {int(self.time_elapsed)} seconds.'
             
             if self.time_elapsed <=0:
