@@ -22,8 +22,13 @@ Tensorflow, Opencv-python and ipykernel are required for this game. I set up a n
 
 **Writing the code**
 
-The play_game function is very simple. 
+The play_game function is simple. 
 
 ![image](https://user-images.githubusercontent.com/91407498/160385780-d80de149-ff80-47d8-ae47-2eee708dc373.png)
 
 It initiates an instance of the RockPaperScissors class and enters the while loop. Either until the user presses 'q' or the round_marker is greater than or equal to 5, the webcam captures and shows the video on the screen and the game plays. 
+
+The flowchart below shows the logic inside the while loop. 
+
+![image](https://user-images.githubusercontent.com/91407498/160463891-438726d3-c656-4981-842a-3620c94452fa.png)
+
