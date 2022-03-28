@@ -2,7 +2,7 @@
 
 A game of Rock Paper Scissors in which the user plays against the computer. The program accesses the webcam and uses a Keras model to detect whether the user is showing rock, paper or scissors to the camera. 
 
-**Creating the model**
+## Creating the model
 
 The model is created using Teachable-Machine. Here, I created four classes, Rock, Paper, Scissors and Nothing. To train each class, I provided images of myself showing each option to the camera. 
 
@@ -16,11 +16,11 @@ The model was tested for accuracy and retrained with more images as required.
 
 <img width="357" alt="Pasted Graphic 2" src="https://user-images.githubusercontent.com/91407498/160381993-4d1db6fd-c4ad-4125-8b8f-b12bf9405ce6.png">
 
-**Setting up the environment**
+## Setting up the environment
 
 Tensorflow, Opencv-python and ipykernel are required for this game. I set up a new conda virtual environment, using python 3.8 to avoid known issues between Tensorflow and the latest version of python. 
 
-**Writing the code**
+## Writing the code
 
 The play_game function is simple. 
 
@@ -32,13 +32,15 @@ The flowchart below shows the logic inside the while loop.
 
 ![image](https://user-images.githubusercontent.com/91407498/160463891-438726d3-c656-4981-842a-3620c94452fa.png)
 
-**Additional features**
+The model provides its prediction in a nested list, e.g. [[1.0838162e-07 2.2813882e-13 1.3565130e-09 9.9999988e-01]], with the highest value being the class (rock, paper, scissors or nothing) it thinks the user is showing. The get_prediction method extracts the highest value from the list using the Numpy method, argmax. 
+
+## Additional features
 
 After coding the basic logic of the game, I added a few extra features to improve the user experience:
 1. using the cv2.putText() method so the messages were printed onto the video frame, not in the terminal. 
 2. adding a countdown to make it clearer when the user has to show their hand.
 
-**Further possible improvements**
+## Further possible improvements
 
 Further improvements that could be made are:
 1. adding images to visually represent the computer choice on the screen. 
