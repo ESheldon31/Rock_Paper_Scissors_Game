@@ -22,7 +22,7 @@ Tensorflow, Opencv-python and ipykernel are required for this game. I set up a n
 
 **Writing the code**
 
-The function of the game is very simple. 
+The play_game function is very simple. 
 
 ![image](https://user-images.githubusercontent.com/91407498/160385780-d80de149-ff80-47d8-ae47-2eee708dc373.png)
 
