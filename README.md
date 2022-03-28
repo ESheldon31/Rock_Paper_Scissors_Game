@@ -43,5 +43,6 @@ After coding the basic logic of the game, I added a few extra features to improv
 ## Further possible improvements
 
 Further improvements that could be made are:
-1. adding images to visually represent the computer choice on the screen. 
-2. instead of just giving the option to close the window at the end of 3 rounds, the user could press a different key to play again. 
+1. further retraining of the model with different users and backgrounds to improve accuracy of model's predictions.
+2. adding images to visually represent the computer choice on the screen. 
+3. instead of just giving the option to close the window at the end of 3 rounds, the user could press a different key to play again. 
