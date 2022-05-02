@@ -18,7 +18,7 @@ The model was tested for accuracy and retrained with more images as required.
 
 ## Setting up the environment
 
-Tensorflow, Opencv-python and ipykernel are required for this game. I set up a new conda virtual environment, using python 3.8 to avoid known issues between Tensorflow and the latest version of python. 
+Tensorflow and Opencv-python are required for this game. I set up a new conda virtual environment, using python 3.8 to avoid known issues between Tensorflow and the latest version of python. 
 
 ## Writing the code
 
