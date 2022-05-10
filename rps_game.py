@@ -1,29 +1,32 @@
+#%%
 import cv2
 from keras.models import load_model
 import numpy as np
 import random
-import time
+from time import time
 
 
 class RockPaperScissors:
     def __init__(self):
-        self.round_marker = 1
-        self.options = ['rock', 'paper', 'scissors', 'nothing']
-        self.player_points = 0
-        self.computer_points = 0
         self.model = load_model('keras_model.h5')
         self.cap = cv2.VideoCapture(0)
+        self.options = ['rock', 'paper', 'scissors', 'nothing']
+
+        self.round_marker = 1
+        self.player_points = 0
+        self.computer_points = 0
+
         self.started = False
         self.countdown_switch = False
         self.camera_error = False
-        self.timestamp = time.time()
+        self.timestamp = time()
         self.time_elapsed = 0
+
         self.message_left = ''
         self.message_right = ''
         self.message_left_mid = ''
         self.message_left_low = ''
         self.message_left_low_low = ''
-        pass
     
     def play_video(self):
         self.data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
@@ -51,13 +54,13 @@ class RockPaperScissors:
 
     def control_panel(self):
         if self.started == False:
-            if self.round_marker == 1:
+            if self.camera_error == True:
+                self.message_left_mid = 'The camera can\'t detect you. Press \'s\' to try again.'
+                self.switch_on()
+            elif self.round_marker == 1:
                 self.intro()
             elif self.round_marker == 4:
                 self.end_game()
-            elif self.camera_error == True:
-                self.message_left_mid = 'The camera can\'t detect you. Press \'s\' to try again.'
-                self.switch_on()
             elif self.round_marker > 1:
                 self.message_left_low = f'Press \'s\' to move onto round {self.round_marker}.'
                 self.switch_on()
@@ -84,7 +87,6 @@ class RockPaperScissors:
                     self.message_left = f'You chose {self.player_choice}.'
                     self.message_right = f'Computer chose {self.computer_choice}.'
                     self.determine_round_winner()
-
 
     def get_prediction(self):
         prediction = self.model.predict(self.data)
